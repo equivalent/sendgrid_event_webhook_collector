@@ -1,6 +1,10 @@
 require 'sinatra'
 require 'grape'
-require 'pry'
+require "sinatra/activerecord"
+require './lib/app_path'
+require 'pry' if ENV['RACK_ENV'] == 'test'
+
+register Sinatra::ActiveRecordExtension
 
 class API < Grape::API
   post 'sendgrid/event' do

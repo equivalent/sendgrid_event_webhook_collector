@@ -1,21 +1,16 @@
-require 'pathname'
+ENV['RACK_ENV'] = 'test'
+
 require 'rack/test'
 require 'rspec'
 require 'rspec/given'
 require './sendgrid_event_webhook_collector'
 require 'json'
 
-ENV['RACK_ENV'] = 'test'
-
-class App
+class AppPath
   module Test
     def self.fixture
-      App.root.join('spec', 'fixtures')
+      AppPath.root.join('spec', 'fixtures')
     end
-  end
-
-  def self.root
-    Pathname.new(File.dirname __dir__)
   end
 end
 
