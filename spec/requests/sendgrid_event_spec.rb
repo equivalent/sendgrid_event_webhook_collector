@@ -8,6 +8,10 @@ describe 'POST /sendgrid/event' do
   end
 
   Then do
-    expect(true).to be_truthy
+    expect(last_response.status).to eq(201)
+  end
+
+  Then do
+    expect(JSON.parse(last_response.body)).to eq({})
   end
 end

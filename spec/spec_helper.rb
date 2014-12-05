@@ -3,6 +3,7 @@ require 'rack/test'
 require 'rspec'
 require 'rspec/given'
 require './sendgrid_event_webhook_collector'
+require 'json'
 
 ENV['RACK_ENV'] = 'test'
 
