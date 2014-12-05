@@ -1,10 +1,13 @@
 require 'spec_helper'
 
 describe 'POST /sendgrid/event' do
+  Given 'valid Sendgrid JSON' do
+    @init_event_count = Event.count
+    @json = File.read(AppPath::Test.fixture.join('sendgrid_event.json'))
+  end
 
   When 'sendgrid sends event to our app' do
-    json = File.read(AppPath::Test.fixture.join('sendgrid_event.json'))
-    post("sendgrid/event", params: json)
+    post("sendgrid/event", @json)
   end
 
   Then do
@@ -12,6 +15,14 @@ describe 'POST /sendgrid/event' do
   end
 
   Then do
-    expect(JSON.parse(last_response.body)).to eq({})
+    expect(json_response).to eq([Event.last.id])
+  end
+
+  Then do
+    expect(Event.count)
+      .to eq(@init_event_count + 1)
+
+    expect(Event.last.raw.keys)
+      .to include('email', 'timestamp', 'smtp-id', 'event')
   end
 end

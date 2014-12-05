@@ -9,9 +9,10 @@ gem 'grape'
 
 # db
 gem 'pg'
-gem "sinatra-activerecord"
+gem 'sinatra-activerecord'
 
-group  :test do
+group  :test, :development do
+  gem 'therubyracer', platforms: :ruby # Ubuntu fix
   gem 'pry'
   gem 'rspec-given'
   gem 'rack-test'

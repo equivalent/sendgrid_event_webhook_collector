@@ -33,3 +33,11 @@ end
 def app
   API
 end
+
+def json_response
+  begin
+    JSON.parse(last_response.body)
+  rescue
+    raise 'response body should be JSON'
+  end
+end
