@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141205172250) do
+ActiveRecord::Schema.define(version: 20141210145750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "events", force: true do |t|
-    t.json "raw"
+    t.json     "raw"
+    t.text     "categories",   default: [], array: true
+    t.string   "email"
+    t.string   "name"
+    t.datetime "occurred_at"
+    t.datetime "processed_at"
+    t.string   "public_uid"
   end
+
+  add_index "events", ["public_uid"], name: "index_events_on_public_uid", using: :btree
 
 end

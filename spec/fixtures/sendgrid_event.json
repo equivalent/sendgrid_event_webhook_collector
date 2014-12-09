@@ -1,8 +1,16 @@
-[
-  {
-    "email": "john.doe@sendgrid.com",
-    "timestamp": 1337197600,
-    "smtp-id": "<4FB4041F.6080505@sendgrid.com>",
-    "event": "processed"
-  }
-]
+{
+  "email":"john.doe@sendgrid.com",
+  "sg_event_id":"VzcPxPv7SdWvUugt-xKymw",
+  "sg_message_id":"142d9f3f351.7618.254f56.filter-147.22649.52A663508.0",
+  "timestamp":1386636112,
+  "smtp-id":"\u003c142d9f3f351.7618.254f56@sendgrid.com\u003e",
+  "event":"processed",
+  "category":[
+    "production",
+    "my_app",
+    "category3"
+  ],
+  "id":"001",
+  "tag1":"invitation",
+  "tag_my2":"user_1235"
+}
