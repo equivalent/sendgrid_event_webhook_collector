@@ -7,6 +7,9 @@ gem 'rake'
 gem 'sinatra'
 gem 'grape'
 
+# server
+gem 'unicorn'
+
 # db
 gem 'pg'
 gem 'sinatra-activerecord'
