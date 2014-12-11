@@ -1,9 +1,15 @@
-class User
-  attr_accessor :token
-  attr_accessor :name
-  attr_accessor :application_names
+require 'securerandom'
+class User < ActiveRecord::Base
+  TOKEN_SIZE=20
 
-  def application_name
-    'my_app'
+  before_create :generate_token
+
+  validates :name, presence: true
+  validates :application_name, presence: true
+
+  generate_public_uid
+
+  def generate_token
+    self.token = SecureRandom.hex(TOKEN_SIZE)
   end
 end

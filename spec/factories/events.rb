@@ -6,7 +6,7 @@ FactoryGirl.define do
       processed_at 2.days.ago
       categories ['production', 'my_app', 'category3']
       name 'bounce'
-      email 'oliver.scott.sykes@test.bmt'
+      email 'oliver.scott.sykes@test.bmth'
       occurred_at Time.at(1386636112)
     end
   end

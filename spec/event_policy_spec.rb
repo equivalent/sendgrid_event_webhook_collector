@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe EventPolicy do
   Given!(:event) { build :event, categories: ['cat', 'car', 'tar'] }
-  Given(:user)   { instance_double(User, application_name: 'car') }
+  Given(:user)   { build :user, application_name: 'car' }
   Given(:policy) { described_class.new(user, event) }
 
   describe '#index?' do
@@ -24,7 +24,7 @@ end
 RSpec.describe EventPolicy::Scope do
   Given!(:event1) { create :event, categories: ['cat', 'car', 'tar'] }
   Given!(:event2) { create :event, categories: ['cat','tar'] }
-  Given(:user) { instance_double(User, application_name: 'car') }
+  Given(:user) { build(:user, application_name: 'car') }
 
   When(:subject) { described_class.new(user, Event.all).resolve }
 
