@@ -16,4 +16,8 @@ class Event < ActiveRecord::Base
     self.processed_at = Time.now
     self.save
   end
+
+  def preview
+    attributes.slice('name', 'email', 'occurred_at')
+  end
 end

@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20141211115346) do
 
   create_table "events", force: true do |t|
     t.json     "raw"
+    t.datetime "create_at"
+    t.datetime "updated_at"
     t.text     "categories",   default: [], array: true
     t.string   "email"
     t.string   "name"

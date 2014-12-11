@@ -1,8 +1,9 @@
 require 'spec_helper'
 RSpec.describe User do
-  Given(:user) { build :user }
+  Given(:user) { described_class.new }
 
   describe 'after create' do
+    Given(:user) { build :user }
     When { user.save }
 
     Then { expect(user.errors).to be_empty }
