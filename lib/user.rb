@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :application_name, presence: true
 
-  generate_public_uid
-
   def generate_token
     self.token = SecureRandom.hex(TOKEN_SIZE)
   end
