@@ -3,7 +3,7 @@ class User
   attr_accessor :name
   attr_accessor :application_names
 
-  def application_names
-    ['validations_production']
+  def application_name
+    'my_app'
   end
 end

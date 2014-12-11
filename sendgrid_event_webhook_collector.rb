@@ -2,10 +2,7 @@ require 'sinatra'
 require 'grape'
 require 'sinatra/activerecord'
 require 'public_uid'
-require './lib/app_path'
-require './lib/event'
-require './lib/event_serializer'
-require './lib/events_serializer'
+Dir['./lib/*.rb'].each {|file| require file }
 require 'pry' if %w(test development).include?(ENV['RACK_ENV'])
 
 register Sinatra::ActiveRecordExtension
