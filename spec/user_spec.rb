@@ -14,4 +14,19 @@ RSpec.describe User do
       expect(user.token.length).to be 40
     end
   end
+
+  describe '.find_param' do
+    Given(:subject) { User.find_param(token) }
+
+    context 'when token is nil' do
+      Given(:token) { nil }
+      Then { is_expected.to be nil }
+    end
+
+    context 'when token is existing user token' do
+      Given(:token) { user.token }
+      When(:user) { create :user, token: 'abc' }
+      Then { is_expected.to eq user }
+    end
+  end
 end

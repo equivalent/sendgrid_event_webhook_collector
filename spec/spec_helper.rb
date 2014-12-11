@@ -26,6 +26,7 @@ require AppPath::Test.support.join('null_logger')
 # silence SQL outpupt in log
 ActiveRecord::Base.logger = NullLogger.new
 FactoryGirl.find_definitions
+API.logger = NullLogger.new
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -40,7 +41,6 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   #config.warnings = true
   config.order = :random # Run specs in random order
-  config.include Rack::Test::Methods
   config.include FactoryGirl::Syntax::Methods
 
   config.before :suite do

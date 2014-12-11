@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe 'POST /sendgrid/event' do
+  include Rack::Test::Methods
+
   Given 'valid Sendgrid JSON' do
     @init_event_count = Event.count
     @json = JSONFixture.new('sendgrid_multiple_events.json').to_json

@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :application_name, presence: true
 
+  def self.find_param(token)
+    return nil if token.is_a? NilClass # prevent extra NULL query
+    find_by(token: token)
+  end
+
   def generate_token
     self.token = SecureRandom.hex(TOKEN_SIZE)
   end

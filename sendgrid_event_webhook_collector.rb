@@ -2,6 +2,7 @@ require 'sinatra'
 require 'grape'
 require 'sinatra/activerecord'
 require 'public_uid'
+Dir['./lib/helpers/*.rb'].each {|file| require file }
 Dir['./lib/*.rb'].each {|file| require file }
 require 'pry' if %w(test development).include?(ENV['RACK_ENV'])
 
@@ -12,11 +13,12 @@ class API < Grape::API
   default_format :json
   format :json
 
-  #helpers do
-    #def logger
-      #API.logger
-    #end
-  #end
+  helpers CurrentUserHelpers
+  helpers do
+    def logger
+      API.logger
+    end
+  end
 
   get '/status' do
     { status: 'ok' }
@@ -24,12 +26,31 @@ class API < Grape::API
 
   resource :events do
     get do
-      EventsSerializer.new(Event.all, params).to_hash
+      logger.info('Accessing /events')
+
+      auth.authenticate!
+      auth.policy = EventPolicy
+      auth.action = :index?
+      auth.authorize!
+
+      permitted_events = EventPolicy::Scope
+        .new(current_user, Event.all)
+        .resolve
+
+      EventsSerializer.new(permitted_events, params).to_hash
     end
 
-    route_param :id do
+    route_param :public_uid do
       get do
-        event = Event.find_by!(public_uid: params[:id])
+        auth.authenticate!
+        event = Event.find_by!(public_uid: params[:public_uid])
+
+        auth.authenticate!
+        auth.policy = EventPolicy
+        auth.action = :show?
+        auth.resource = event
+        auth.authorize!
+
         EventSerializer.new(event).to_hash
       end
     end
