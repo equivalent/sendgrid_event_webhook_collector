@@ -7,6 +7,13 @@ if %w(test development).include?(ENV['RACK_ENV'])
   task :default => :spec
 end
 
+namespace :event do
+  desc 'Process unprocessed Events'
+  task :process do
+    Event.process
+  end
+end
+
 namespace :user do
   desc "list users"
   task :list do

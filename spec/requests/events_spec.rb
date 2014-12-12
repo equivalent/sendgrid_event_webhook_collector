@@ -12,6 +12,7 @@ RSpec.describe 'GET /v1/events' do
     ]
   end
 
+  Given!(:unprocessed_event) { create(:event) }
   Given!(:other_user_event) do
     create(:event, :processed, categories: ['asking', 'alexandria'])
   end

@@ -44,7 +44,7 @@ class API < Grape::API
       auth.authorize!
 
       permitted_events = EventPolicy::Scope
-        .new(current_user, Event.all)
+        .new(current_user, Event.processed)
         .resolve
 
       EventsSerializer
