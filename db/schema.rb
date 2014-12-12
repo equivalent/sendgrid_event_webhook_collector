@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20141212010613) do
 
   create_table "events", force: true do |t|
     t.json     "raw"
-    t.datetime "create_at"
+    t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "categories",   default: [], array: true
     t.string   "email"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 20141212010613) do
     t.string   "name"
     t.string   "token"
     t.string   "application_name"
-    t.datetime "create_at"
+    t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "creator",          default: false
   end
