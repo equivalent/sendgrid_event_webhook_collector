@@ -8,6 +8,7 @@ def event_full_hash(options={})
   authority = options[:authority]
 
   {
+    'id' => event.public_uid,
     'href' => "#{authority}/v1/events/#{event.public_uid}",
     'categories' => ['production', 'my_app', 'category3'],
     'name' => event.name,

@@ -15,11 +15,17 @@ class EventSerializer
     resource
       .attributes
       .slice(*attributes.collect(&:to_s))
-      .merge({'href' => href, 'sendgrid' => sendgrid})
+      .merge({
+        'href' => href,
+        'sendgrid' => sendgrid,
+        'id' => resource.public_uid,
+      })
       .tap do |hash|
         hash.update(hash) { |key, v| value_to_s(v) }
       end
       .to_camelback_keys
+      .sort
+      .to_h
   end
 
   def value_to_s(value)
