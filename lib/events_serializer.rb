@@ -1,5 +1,6 @@
 class EventsSerializer
   attr_reader :scope, :params
+  attr_accessor :authority
 
   def initialize(scope, params)
     @scope  = scope
@@ -7,7 +8,7 @@ class EventsSerializer
   end
 
   def href
-    link = "http://api.myapp.com/v1/events?offset=#{offset}&limit=#{limit}"
+    link = "#{authority}/v1/events?offset=#{offset}&limit=#{limit}"
     link += '&expand=items' if expand?('items')
     link
   end
@@ -34,6 +35,7 @@ class EventsSerializer
       .collect do |e|
         hash = EventSerializer
           .new(e)
+          .tap { |es| es.authority = authority }
           .to_hash
 
         hash.slice!('href') unless expand?('items')

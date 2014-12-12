@@ -12,12 +12,24 @@ class API < Grape::API
   content_type :json, 'application/json'
   default_format :json
   format :json
+  version 'v1', using: :path
 
   helpers CurrentUserHelpers
   helpers do
     def logger
       API.logger
     end
+
+    def authority
+      "#{env["rack.url_scheme"]}://#{request.host_with_port}"
+    end
+  end
+
+
+  before do
+    logger.info "#{request.ip} #{request.request_method} " +
+                "#{env['PATH_INFO']} " +
+                "Token: #{token || 'NONE'}"
   end
 
   get '/status' do
@@ -26,8 +38,6 @@ class API < Grape::API
 
   resource :events do
     get do
-      logger.info('Accessing /events')
-
       auth.authenticate!
       auth.policy = EventPolicy
       auth.action = :index?
@@ -37,7 +47,10 @@ class API < Grape::API
         .new(current_user, Event.all)
         .resolve
 
-      EventsSerializer.new(permitted_events, params).to_hash
+      EventsSerializer
+        .new(permitted_events, params)
+        .tap { |es| es.authority = authority }
+        .to_hash
     end
 
     post do
@@ -64,7 +77,10 @@ class API < Grape::API
         auth.resource = event
         auth.authorize!
 
-        EventSerializer.new(event).to_hash
+        EventSerializer
+          .new(event)
+          .tap { |es| es.authority = authority }
+          .to_hash
       end
     end
   end

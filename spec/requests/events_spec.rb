@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'GET /events' do
+RSpec.describe 'GET /v1/events' do
   include Rack::Test::Methods
 
   Given!(:token) { create(:user).token }
@@ -17,7 +17,7 @@ RSpec.describe 'GET /events' do
   end
 
   context 'using params token' do
-    When { get("/events?token=#{token}") }
+    When { get("/v1/events?token=#{token}") }
 
     Then do
       expect(last_response.status).to be 200
@@ -33,7 +33,7 @@ RSpec.describe 'GET /events' do
   context 'using Authorization token' do
     When do
       header('Authorization', "Token #{token}")
-      get("/events")
+      get("/v1/events")
     end
 
     Then do
@@ -43,7 +43,7 @@ RSpec.describe 'GET /events' do
 
   context 'not passing token any way' do
     When do
-      get("/events")
+      get("/v1/events")
     end
 
     Then do

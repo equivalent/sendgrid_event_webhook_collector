@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe 'POST /events' do
+RSpec.describe 'POST /v1/request.ipevents' do
   include Rack::Test::Methods
 
   Given!(:token) { create(:user, :creator).token }
@@ -14,7 +14,7 @@ RSpec.describe 'POST /events' do
   end
 
   When 'sendgrid sends event to our app' do
-    post("/events?token=#{token}", sendgrid_json)
+    post("/v1/events?token=#{token}", sendgrid_json)
   end
 
   Then do
@@ -44,7 +44,7 @@ RSpec.describe 'POST /events' do
 
   context 'not passing token any way' do
     When do
-      post("/events")
+      post("/v1/events")
     end
 
     Then do
@@ -56,7 +56,7 @@ RSpec.describe 'POST /events' do
     Given!(:token) { create(:user).token }
 
     When do
-      post("/events?token=#{token}", sendgrid_json)
+      post("/v1/events?token=#{token}", sendgrid_json)
     end
 
     Then do

@@ -5,8 +5,10 @@ def event_full_hash(options={})
       email: 'john.doe@sendgrid.com'
   end
 
+  authority = options[:authority]
+
   {
-    'href' => "http://api.myapp.com/v1/events/#{event.public_uid}",
+    'href' => "#{authority}/v1/events/#{event.public_uid}",
     'categories' => ['production', 'my_app', 'category3'],
     'name' => event.name,
     'email' => event.email,

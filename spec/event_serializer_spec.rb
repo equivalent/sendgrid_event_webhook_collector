@@ -4,11 +4,17 @@ RSpec.describe EventSerializer do
 
   describe '#to_hash' do
     Given(:event)  { build :event, :processed }
-    When(:subject) { described_class.new(event).to_hash }
+
+    When(:subject) do
+      described_class
+        .new(event)
+        .tap { |serial| serial.authority = 'http://api.myapp.com' }
+        .to_hash
+    end
 
     Then do
       expect(subject).to match(
-        event_full_hash(event: event)
+        event_full_hash(event: event, authority: 'http://api.myapp.com')
       )
     end
   end

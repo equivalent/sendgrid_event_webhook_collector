@@ -7,7 +7,12 @@ RSpec.describe EventsSerializer do
     Given!(:event1) { create :event, :processed }
     Given!(:event2) { create :event, :processed }
     Given(:scope) { Event.all }
-    Given(:subject) { described_class.new(scope, params).to_hash }
+    Given(:subject) do
+      described_class
+        .new(scope, params)
+        .tap { |serial| serial.authority = 'http://api.myapp.com' }
+        .to_hash
+    end
 
     context 'without expand' do
       Given(:params) { {} }
@@ -45,7 +50,7 @@ RSpec.describe EventsSerializer do
             previous: "",
             last: "",
             items: [
-              event_full_hash(event: event2)
+              event_full_hash(event: event2, authority: 'http://api.myapp.com')
             ]
           }
         )

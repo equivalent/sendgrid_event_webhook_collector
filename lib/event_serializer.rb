@@ -1,14 +1,10 @@
 require 'awrence'
 class EventSerializer
   attr_reader :resource
-  attr_writer :expand
+  attr_accessor :authority
 
   def initialize(resource)
     @resource = resource
-  end
-
-  def expand
-    @expand || true
   end
 
   def attributes
@@ -42,7 +38,7 @@ class EventSerializer
   end
 
   def href
-    "http://api.myapp.com/v1/events/#{resource.public_uid}"
+    "#{authority}/v1/events/#{resource.public_uid}"
   end
 
   def sendgrid

@@ -23,10 +23,19 @@ end
 require AppPath::Test.support.join('json_fixture')
 require AppPath::Test.support.join('null_logger')
 
-# silence SQL outpupt in log
-ActiveRecord::Base.logger = NullLogger.new
-FactoryGirl.find_definitions
+module Rack
+  module Test
+    module Methods
+      def build_rack_mock_session
+        Rack::MockSession.new(app, 'api.myapp.com')
+      end
+    end
+  end
+end
+
+ActiveRecord::Base.logger = NullLogger.new # silence SQL outpupt in log
 API.logger = NullLogger.new
+FactoryGirl.find_definitions
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

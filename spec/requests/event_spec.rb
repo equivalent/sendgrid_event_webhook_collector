@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-RSpec.describe 'GET /events/uid12345' do
+RSpec.describe 'GET /v1/events/uid12345' do
   include Rack::Test::Methods
 
   Given!(:event) { create(:event, :processed) }
   Given!(:token) { create(:user).token }
 
   When do
-    get("/events/#{event.public_uid}?token=#{token}")
+    get("/v1/events/#{event.public_uid}?token=#{token}")
   end
 
   Then do
