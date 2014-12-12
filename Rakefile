@@ -10,23 +10,25 @@ end
 namespace :user do
   desc "list users"
   task :list do
-    User.pluck(:name, :application_name, :token).each do |attributes|
-      puts attributes.join(' | ')
-    end
+    User.all.collect do |u|
+      [u.name, u.application_name, u.token, u.creator ? 'creator' : nil ]
+    end.tap { |row| puts "#{row.join(' | ')}"}
   end
 
   desc 'create new user setup'
   task :add do
     user = User.new
 
-
-    puts "Is this a Sendgrid access user ?"
-
     puts "Name of user"
     user.name = STDIN.gets().strip
 
+    if yes_no("Is this an User that can create Sendgrid events ?")
+      user.creator = true
+    end
+
     puts "Application name that user can access"
-    user.application_name = STDIN.gets.strip
+    name = STDIN.gets.strip
+    user.application_name = name == '' ? nil : name
 
     accessable_events = EventPolicy::Scope
       .new(user, Event.all)
@@ -37,11 +39,7 @@ namespace :user do
       puts event.preview
     end
 
-    begin
-      puts %Q{Save user "#{user.name}" ?  yes/no }
-    end while (!%w(yes no).include?(save = STDIN.gets.strip))
-
-    if save == 'yes'
+    if yes_no("Save user #{user.name}")
       user.save!
       puts "token: #{user.token}"
     else
@@ -50,4 +48,9 @@ namespace :user do
   end
 end
 
-
+def yes_no(question)
+  begin
+    puts "#{question} ?  (yes/no) "
+  end while (!%w(yes no).include?(answer = STDIN.gets.strip))
+  answer == 'yes'
+end
