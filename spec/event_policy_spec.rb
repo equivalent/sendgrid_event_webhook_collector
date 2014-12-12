@@ -15,8 +15,18 @@ RSpec.describe EventPolicy do
     Then { expect(subject).to be_truthy }
 
     context 'when restricted user' do
-      Given(:user)   { instance_double(User, application_name: 'dog') }
+      Given(:user) { build :user, application_name: 'dog' }
       Then { expect(subject).to be_falsey }
+    end
+  end
+
+  describe '#create?' do
+    When(:subject) { policy.create? }
+    Then { expect(subject).to be_falsey }
+
+    context 'when user is sendgrid creator' do
+      Given(:user) { build :user, :creator }
+      Then { expect(subject).to be_truthy }
     end
   end
 end

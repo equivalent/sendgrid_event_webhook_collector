@@ -19,6 +19,9 @@ namespace :user do
   task :add do
     user = User.new
 
+
+    puts "Is this a Sendgrid access user ?"
+
     puts "Name of user"
     user.name = STDIN.gets().strip
 

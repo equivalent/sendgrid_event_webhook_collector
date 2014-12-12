@@ -40,6 +40,19 @@ class API < Grape::API
       EventsSerializer.new(permitted_events, params).to_hash
     end
 
+    post do
+      auth.authenticate!
+      auth.policy = EventPolicy
+      auth.action = :create?
+      auth.authorize!
+
+      raw_events = JSON.parse(request.body.read)
+
+      raw_events.collect do |event_params|
+        Event.create!(raw: event_params).id
+      end
+    end
+
     route_param :public_uid do
       get do
         auth.authenticate!
@@ -53,17 +66,6 @@ class API < Grape::API
 
         EventSerializer.new(event).to_hash
       end
-    end
-  end
-
-  post '/sendgrid/event' do
-    # due to rack beeing stupid and requiring hash only
-    # syntax in params this is the only way how to get
-    # the Array JSON provided by Sendgrid POST body
-    raw_events = JSON.parse(request.body.read)
-
-    raw_events.collect do |event_params|
-      Event.create!(raw: event_params).id
     end
   end
 end

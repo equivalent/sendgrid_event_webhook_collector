@@ -27,4 +27,8 @@ class EventPolicy
   def show?
     record.categories.include?(user.application_name)
   end
+
+  def create?
+    user.creator
+  end
 end
