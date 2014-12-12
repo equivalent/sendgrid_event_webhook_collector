@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   before_create :generate_token
 
   validates :name, presence: true, uniqueness: true
-  validates :application_name, presence: true
+  validates :application_name, presence: true, unless: :creator
 
   def self.find_param(token)
     return nil if token.is_a? NilClass # prevent extra NULL query
