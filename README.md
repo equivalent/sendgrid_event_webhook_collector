@@ -1,5 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/equivalent/sendgrid_event_webhook_collector/badges/gpa.svg)](https://codeclimate.com/github/equivalent/sendgrid_event_webhook_collector)
-
+[![Build Status](https://travis-ci.org/equivalent/sendgrid_event_webhook_collector.svg)](https://travis-ci.org/equivalent/sendgrid_event_webhook_collector)
 
 # Database
 
