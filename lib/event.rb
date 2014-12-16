@@ -4,17 +4,19 @@ class Event < ActiveRecord::Base
   scope :unprocessed, -> { where(processed_at: nil) }
   scope :processed, -> { where.not(processed_at: nil) }
 
-  def self.process
-    unprocessed.each(&:process)
-  end
+  has_many :arguments
 
-  def process
-    self.name = raw.fetch('event')
-    self.email = raw.fetch('email')
-    self.occurred_at = Time.at(raw.fetch('timestamp').to_i)
-    self.categories = raw.fetch('category') { [] }
-    self.processed_at = Time.now
-    self.save
+  def self.process
+    whitelist = WhitelistArgument.pluck(:name)
+    unprocessed.each do |event|
+      EventProcessor.new
+        .tap do |ep|
+          ep.event = event
+          ep.raw = event.raw
+          ep.whitelist = whitelist
+        end
+        .call
+    end
   end
 
   def preview

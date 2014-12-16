@@ -4,9 +4,10 @@ require 'rack/test'
 require 'json'
 require 'rspec'
 require 'rspec/given'
-require 'database_cleaner'
 require 'factory_girl'
 require './sendgrid_event_webhook_collector'
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 class AppPath
   module Test
@@ -33,7 +34,6 @@ module Rack
   end
 end
 
-ActiveRecord::Base.logger = NullLogger.new # silence SQL outpupt in log
 API.logger = NullLogger.new
 FactoryGirl.find_definitions
 
@@ -51,15 +51,6 @@ RSpec.configure do |config|
   #config.warnings = true
   config.order = :random # Run specs in random order
   config.include FactoryGirl::Syntax::Methods
-
-  config.before :suite do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before :each do
-    DatabaseCleaner.clean_with :deletion
-  end
 end
 
 def app

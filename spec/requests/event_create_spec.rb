@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'ar_spec_helper'
 
 RSpec.describe 'POST /v1/request.ipevents' do
   include Rack::Test::Methods

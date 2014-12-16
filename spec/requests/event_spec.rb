@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'ar_spec_helper'
 
 RSpec.describe 'GET /v1/events/uid12345' do
   include Rack::Test::Methods
