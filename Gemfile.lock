@@ -97,6 +97,7 @@ GEM
       sinatra (~> 1.0)
     slop (3.6.0)
     sorcerer (1.0.2)
+    table_print (1.5.3)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -130,5 +131,6 @@ DEPENDENCIES
   rspec-given
   sinatra
   sinatra-activerecord
+  table_print
   therubyracer
   unicorn

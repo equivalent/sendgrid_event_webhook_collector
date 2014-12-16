@@ -21,6 +21,9 @@ gem 'awrence' # underscore to camelCase
 # Uri
 gem 'public_uid'
 
+# console output
+gem 'table_print'
+
 group  :test, :development do
   gem 'therubyracer', platforms: :ruby # Ubuntu fix
   gem 'pry'

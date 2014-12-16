@@ -1,5 +1,6 @@
 require "sinatra/activerecord/rake"
 require './sendgrid_event_webhook_collector'
+require 'table_print'
 
 if %w(test development).include?(ENV['RACK_ENV'])
   require 'rspec/core/rake_task'
@@ -14,12 +15,30 @@ namespace :event do
   end
 end
 
+namespace :whitelist_argument do
+  desc 'add new whitelist argument'
+  task :add do
+    wa = WhitelistArgument.new
+
+    puts "Whitelist argument name"
+    wa.name = input
+
+    wa.save
+
+    puts "Whitelist created"
+  end
+
+  desc 'list all whitelist arguments'
+  task :list do
+    binding.pry
+    tp WhitelistArgument.all
+  end
+end
+
 namespace :user do
   desc "list users"
   task :list do
-    User.all.collect do |u|
-      [u.name, u.application_name, u.token, u.creator ? 'creator' : nil ]
-    end.tap { |row| puts "#{row.join(' | ')}"}
+    tp User.all, 'name', 'creator', 'application_name'
   end
 
   desc 'create new user setup'
@@ -27,14 +46,14 @@ namespace :user do
     user = User.new
 
     puts "Name of user"
-    user.name = STDIN.gets().strip
+    user.name = input
 
     if yes_no("Is this an User that can create Sendgrid events ?")
       user.creator = true
     end
 
     puts "Application name that user can access"
-    name = STDIN.gets.strip
+    name = input
     user.application_name = name == '' ? nil : name
 
     accessable_events = EventPolicy::Scope
@@ -48,7 +67,8 @@ namespace :user do
 
     if yes_no("Save user #{user.name}")
       user.save!
-      puts "token: #{user.token}"
+      puts "Token: #{user.token}"
+      puts 'Please write down this token'
     else
       puts 'User creation cancled'
     end
@@ -58,6 +78,10 @@ end
 def yes_no(question)
   begin
     puts "#{question} ?  (yes/no) "
-  end while (!%w(yes no).include?(answer = STDIN.gets.strip))
+  end while (!%w(yes no).include?(answer = input))
   answer == 'yes'
+end
+
+def input
+  STDIN.gets.strip
 end
