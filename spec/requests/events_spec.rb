@@ -56,14 +56,14 @@ RSpec.describe 'GET /v1/events' do
 
   context 'when quering by name' do
     Given!(:event) do
-      create(:event, :processed, arguments: [create(:argument, name: 'tag_my2', value: 'abc')])
+      create(:event, :processed, arguments: [create(:argument, name: 'tagMy2', value: 'abc')])
     end
 
     Given(:events_json_event_hrefs) { json_response.fetch('items').collect{ |h| h.fetch('href') } }
 
     When do
       header('Authorization', "Token #{token}")
-      get("/v1/events?q[tag_my2]=abc")
+      get("/v1/events?q[tagMy2]=abc")
     end
 
     Then do
