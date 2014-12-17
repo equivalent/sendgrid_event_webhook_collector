@@ -1,10 +1,10 @@
-require 'spec_helper'
+require 'ar_spec_helper'
 
 RSpec.describe EventsSerializer do
   load AppPath::Test.fixture.join('event_full_hash.rb')
 
   describe '#to_hash' do
-    Given!(:event1) { create :event, :processed }
+    Given!(:event1) { create :event, :processed, :with_argument }
     Given!(:event2) { create :event, :processed }
     Given(:scope) { Event.all }
     Given(:subject) do
@@ -51,6 +51,27 @@ RSpec.describe EventsSerializer do
             last: "",
             items: [
               event_full_hash(event: event2, authority: 'http://api.myapp.com')
+            ]
+          }
+        )
+      end
+    end
+
+    context 'without search query' do
+      Given(:params) { { 'q' => { 'metalCore' => 'B.M.T.H'} } }
+
+      Then do
+        expect(subject).to match(
+          {
+            href: "http://api.myapp.com/v1/events?offset=0&limit=40",
+            limit: 40,
+            offset: 0,
+            first: '',
+            next: "",
+            previous: "",
+            last: "",
+            items: [
+              { 'href' => event_url(event1.public_uid) },
             ]
           }
         )

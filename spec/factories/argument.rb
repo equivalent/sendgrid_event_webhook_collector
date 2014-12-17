@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :argument do
-    name  'B.M.T.H'
-    value 'Metalcore'
+    name  'metalCore'
+    value 'B.M.T.H'
   end
 end

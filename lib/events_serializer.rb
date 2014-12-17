@@ -29,18 +29,26 @@ class EventsSerializer
   private
 
   def items
-    scope
+    search_scope
       .limit(limit)
       .offset(offset)
-      .collect do |e|
-        hash = EventSerializer
-          .new(e)
-          .tap { |es| es.authority = authority }
-          .to_hash
+      .collect { |event| serialize_resource(event) }
+  end
 
-        hash.slice!('href') unless expand?('items')
-        hash
-      end
+  def serialize_resource(event)
+    hash = EventSerializer
+      .new(event)
+      .tap { |es| es.authority = authority }
+      .to_hash
+
+    hash.slice!('href') unless expand?('items')
+    hash
+  end
+
+  def search_scope
+    EventsQuery
+      .new(scope)
+      .search(params['q'] || {})
   end
 
   def expand?(what)

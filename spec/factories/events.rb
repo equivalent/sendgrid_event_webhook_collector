@@ -9,5 +9,11 @@ FactoryGirl.define do
       email 'oliver.scott.sykes@test.bmth'
       occurred_at Time.at(1386636112)
     end
+
+    trait :with_argument do
+      after :create do |event|
+        event.arguments << create(:argument)
+      end
+    end
   end
 end

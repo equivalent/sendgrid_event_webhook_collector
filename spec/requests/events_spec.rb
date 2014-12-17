@@ -55,24 +55,19 @@ RSpec.describe 'GET /v1/events' do
   end
 
   context 'when quering by name' do
-    Given!(:desired_tag_event) do
-      create(:event, :processed, arguments: [create(:argument, name: 'tag_my2')])
-    end
-
-    Given!(:diferent_tag_event) do
-      create(:event, :processed, arguments: [create(:argument, name: 'foo')])
+    Given!(:event) do
+      create(:event, :processed, arguments: [create(:argument, name: 'tag_my2', value: 'abc')])
     end
 
     Given(:events_json_event_hrefs) { json_response.fetch('items').collect{ |h| h.fetch('href') } }
 
     When do
       header('Authorization', "Token #{token}")
-      get("/v1/events?q[tag_my2]=user_1235")
+      get("/v1/events?q[tag_my2]=abc")
     end
 
     Then do
-      expect(events_json_event_hrefs).to     include event_url(desired_tag_event.public_uid)
-      expect(events_json_event_hrefs).not_to include event_url(diferent_tag_event.public_uid)
+      expect(events_json_event_hrefs).to include event_url(event.public_uid)
     end
   end
 end
