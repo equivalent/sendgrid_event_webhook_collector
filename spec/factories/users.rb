@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    name "Oli BMTH"
+    name "Oli Skyes"
     application_name 'my_app'
 
     trait :creator do

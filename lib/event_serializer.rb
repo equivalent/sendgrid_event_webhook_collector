@@ -8,7 +8,7 @@ class EventSerializer
   end
 
   def attributes
-    [:name, :email, :occurred_at, :categories]
+    [:occurred_at]
   end
 
   def to_hash
@@ -17,15 +17,36 @@ class EventSerializer
       .slice(*attributes.collect(&:to_s))
       .merge({
         'href' => href,
-        'sendgrid' => sendgrid,
         'id' => resource.public_uid,
+        'categories' => categories
       })
+      .merge(event_based_arguments)
       .tap do |hash|
         hash.update(hash) { |key, v| value_to_s(v) }
       end
       .to_camelback_keys
       .sort
       .to_h
+  end
+
+  def arguments
+    @arguments ||= resource.arguments
+  end
+
+  def event_based_arguments
+    arguments
+      .select { |a| a.event_based? }
+      .inject({}) do |hash, argument|
+        hash[argument.name] = argument.value
+        hash
+      end
+  end
+
+  def categories
+    arguments
+      .select { |a| a.category_based? }
+      .collect(&:value)
+      .sort
   end
 
   def value_to_s(value)
@@ -45,9 +66,5 @@ class EventSerializer
 
   def href
     "#{authority}/v1/events/#{resource.public_uid}"
-  end
-
-  def sendgrid
-    resource.raw
   end
 end

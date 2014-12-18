@@ -19,3 +19,13 @@ curl -XGET -H 'Authorization: Token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' ht
 # using param
 curl -XGET http://localhost:9393/events?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
+# Restricted arg names
+
+```
+category
+event
+name
+email
+timestamp
+```

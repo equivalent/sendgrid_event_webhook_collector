@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   scope :processed, -> { where.not(processed_at: nil) }
 
   has_many :arguments
+  has_many :categories
 
   def self.process
     whitelist = WhitelistArgument.pluck(:name)
@@ -13,13 +14,13 @@ class Event < ActiveRecord::Base
         .tap do |ep|
           ep.event = event
           ep.raw = event.raw
-          ep.whitelist = whitelist
+          ep.custom_whitelist = whitelist
         end
         .call
     end
   end
 
   def preview
-    attributes.slice('name', 'email', 'occurred_at')
+    attributes.slice('name', 'email')
   end
 end

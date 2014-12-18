@@ -32,9 +32,13 @@ RSpec.describe Event do
     end
 
     Then do
+      num_categories = 3
+      num_custom_arg = 2
+      num_sendgrid_args = 2
+
       expect { process }
         .to change { event.arguments.count }
-        .by(2)
+        .by(num_categories + num_sendgrid_args + num_custom_arg)
     end
   end
 end

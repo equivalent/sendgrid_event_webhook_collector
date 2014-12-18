@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141215193400) do
+ActiveRecord::Schema.define(version: 20141218112430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,15 +22,13 @@ ActiveRecord::Schema.define(version: 20141215193400) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "events", force: true do |t|
     t.json     "raw"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "categories",   default: [], array: true
-    t.string   "email"
-    t.string   "name"
     t.datetime "occurred_at"
     t.datetime "processed_at"
     t.string   "public_uid"

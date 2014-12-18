@@ -2,9 +2,10 @@ require 'sinatra'
 require 'grape'
 require 'sinatra/activerecord'
 require 'public_uid'
-Dir['./lib/helpers/*.rb'].each {|file| require file }
-Dir['./lib/*.rb'].each {|file| require file }
 require 'pry' if %w(test development).include?(ENV['RACK_ENV'])
+Dir['./lib/helpers/*.rb'].each {|file| require file }
+Dir['./models/*.rb'].each {|file| require file }
+Dir['./lib/*.rb'].each {|file| require file }
 
 register Sinatra::ActiveRecordExtension
 

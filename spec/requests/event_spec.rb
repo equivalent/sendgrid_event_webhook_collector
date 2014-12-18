@@ -16,7 +16,7 @@ RSpec.describe 'GET /v1/events/uid12345' do
 
   Then do
     expect(json_response).to be_kind_of Hash
-    expect(json_response.fetch('name')).to eq event.name
+    expect(json_response.fetch('name')).to eq 'processed'
   end
 
   context do

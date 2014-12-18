@@ -1,7 +1,13 @@
-require 'spec_helper'
+require 'ar_spec_helper'
 
 RSpec.describe EventPolicy do
-  Given!(:event) { build :event, categories: ['cat', 'car', 'tar'] }
+  Given!(:event) do
+    build :event, categories: [
+      build(:category, value: 'cat'),
+      build(:category, value: 'car'),
+      build(:category, value: 'tar')
+    ]
+  end
   Given(:user)   { build :user, application_name: 'car' }
   Given(:policy) { described_class.new(user, event) }
 
@@ -32,8 +38,21 @@ RSpec.describe EventPolicy do
 end
 
 RSpec.describe EventPolicy::Scope do
-  Given!(:event1) { create :event, categories: ['cat', 'car', 'tar'] }
-  Given!(:event2) { create :event, categories: ['cat','tar'] }
+  Given!(:event1) do
+    create :event, categories: [
+      create(:category, value: 'cat'),
+      create(:category, value: 'car'),
+      create(:category, value: 'tar')
+    ]
+  end
+
+  Given!(:event2) do
+    create :event, categories: [
+      create(:category, value: 'cat'),
+      create(:category, value: 'tar')
+    ]
+  end
+
   Given(:user) { build(:user, application_name: 'car') }
 
   When(:subject) { described_class.new(user, Event.all).resolve }

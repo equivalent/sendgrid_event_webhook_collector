@@ -1,8 +1,6 @@
 require 'ar_spec_helper'
 
 RSpec.describe EventsSerializer do
-  load AppPath::Test.fixture.join('event_full_hash.rb')
-
   describe '#to_hash' do
     Given!(:event1) { create :event, :processed, :with_argument }
     Given!(:event2) { create :event, :processed }
@@ -44,13 +42,20 @@ RSpec.describe EventsSerializer do
           {
             href: "http://api.myapp.com/v1/events?offset=1&limit=1&expand=items",
             limit: 1,
-            offset: 1,
+            offset: 1, # so second page
             first: '',
             next: "",
             previous: "",
             last: "",
             items: [
-              event_full_hash(event: event2, authority: 'http://api.myapp.com')
+              {
+                'href' => "http://api.myapp.com/v1/events/#{event2.public_uid}",
+                'id' => event2.public_uid,
+                'name' =>  'processed',
+                'email' => 'john.doe@sendgrid.com',
+                'categories' => ['category3', 'my_app', 'production'],
+                'occurredAt' => '2013-12-10T00:41:52Z',
+              }
             ]
           }
         )

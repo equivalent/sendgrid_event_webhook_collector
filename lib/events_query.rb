@@ -37,9 +37,15 @@ class EventsQuery
   end
 
   def event_ids_with_argument(key, value)
-    Argument
-      .where(Argument.arel_table[:name].eq key)
-      .where(Argument.arel_table[:value].eq value)
-      .pluck(:event_id)
+    if key == 'category'
+      Category
+        .where(value: value)
+        .pluck(:event_id)
+    else
+      Argument
+        .where(Argument.arel_table[:name].eq key)
+        .where(Argument.arel_table[:value].eq value)
+        .pluck(:event_id)
+    end
   end
 end

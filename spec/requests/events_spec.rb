@@ -15,7 +15,7 @@ RSpec.describe 'GET /v1/events' do
 
     Given!(:unprocessed_event) { create(:event) }
     Given!(:other_user_event) do
-      create(:event, :processed, categories: ['asking', 'alexandria'])
+      create(:event, :processed, category_values: ['asking', 'alexandria'])
     end
 
     context 'using params token' do
@@ -56,7 +56,9 @@ RSpec.describe 'GET /v1/events' do
 
   context 'when quering by name' do
     Given!(:event) do
-      create(:event, :processed, arguments: [create(:argument, name: 'tagMy2', value: 'abc')])
+      create(:event, :processed).tap do |event|
+        event.arguments << build(:custom_argument, name: 'tagMy2', value: 'abc')
+      end
     end
 
     Given(:events_json_event_hrefs) { json_response.fetch('items').collect{ |h| h.fetch('href') } }

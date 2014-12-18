@@ -8,8 +8,9 @@ class EventPolicy
     end
 
     def resolve
-      # PostgreSQL only sofar
-      scope.where("? = ANY(events.categories)", user.application_name)
+      scope
+        .joins(:categories)
+        .where(Category.arel_table[:value].eq user.application_name)
     end
   end
 
@@ -25,7 +26,7 @@ class EventPolicy
   end
 
   def show?
-    record.categories.include?(user.application_name)
+    record.categories.collect(&:value).include? user.application_name
   end
 
   def create?
