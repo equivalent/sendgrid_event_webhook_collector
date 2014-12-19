@@ -22,7 +22,7 @@ RSpec.describe 'POST /v1/request.ipevents' do
   end
 
   Then do
-    expect(json_response).to eq(Event.pluck(:id).last(7))
+    expect(json_response).to eq(Event.pluck(:public_uid).last(7))
   end
 
   Then do

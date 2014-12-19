@@ -63,7 +63,9 @@ class API < Grape::API
       raw_events = JSON.parse(request.body.read)
 
       raw_events.collect do |event_params|
-        Event.create!(raw: event_params).id
+        Event
+          .create!(raw: event_params)
+          .public_uid
       end
     end
 
