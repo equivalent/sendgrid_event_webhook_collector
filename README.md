@@ -23,9 +23,25 @@ curl -XGET http://localhost:9393/events?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # Restricted arg names
 
 ```
+id
+href
 category
 event
 name
 email
 timestamp
+occuredAt
+occured_at
+created_at
+createdAt
+updated_at
+updatedAt
 ```
+
+# todo
+
+* POST Event shoud return serialized event not just post of public_uids
+* configuration file
+  * option to force https on production
+  * option for authority (http://whatever)
+* make a gem from app
