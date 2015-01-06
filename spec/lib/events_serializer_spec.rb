@@ -21,7 +21,7 @@ RSpec.describe EventsSerializer do
             href: "http://api.myapp.com/v1/events?offset=0&limit=40",
             limit: 40,
             offset: 0,
-            first: '',
+            first: "http://api.myapp.com/v1/events?offset=0&limit=40",
             next: "",
             previous: "",
             last: "",
@@ -36,6 +36,7 @@ RSpec.describe EventsSerializer do
 
     context 'with items expand and changed offset' do
       Given(:params) { { expand: 'items', offset: '1', limit: 1  } }
+      Given!(:event3) { create :event, :processed, :with_argument }
 
       Then do
         expect(subject).to match(
@@ -43,9 +44,9 @@ RSpec.describe EventsSerializer do
             href: "http://api.myapp.com/v1/events?offset=1&limit=1&expand=items",
             limit: 1,
             offset: 1, # so second page
-            first: '',
-            next: "",
-            previous: "",
+            first:    "http://api.myapp.com/v1/events?offset=0&limit=1&expand=items",
+            next:     "http://api.myapp.com/v1/events?offset=2&limit=1&expand=items",
+            previous: "http://api.myapp.com/v1/events?offset=0&limit=1&expand=items",
             last: "",
             items: [
               {
@@ -71,7 +72,7 @@ RSpec.describe EventsSerializer do
             href: "http://api.myapp.com/v1/events?offset=0&limit=40",
             limit: 40,
             offset: 0,
-            first: '',
+            first: "http://api.myapp.com/v1/events?offset=0&limit=40",
             next: "",
             previous: "",
             last: "",

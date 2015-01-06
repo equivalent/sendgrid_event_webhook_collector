@@ -23,6 +23,7 @@ curl -XGET http://localhost:9393/events?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # Restricted arg names
 
 ```
+ip
 id
 href
 category
@@ -36,6 +37,9 @@ created_at
 createdAt
 updated_at
 updatedAt
+sg_message_id
+sg_event_id
+useragent
 ```
 
 # todo

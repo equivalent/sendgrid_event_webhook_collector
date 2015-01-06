@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   scope :unprocessed, -> { where(processed_at: nil) }
   scope :processed, -> { where.not(processed_at: nil) }
 
-  has_many :arguments
+  has_many :arguments, dependent: :destroy
   has_many :categories
 
   def self.process

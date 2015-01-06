@@ -30,7 +30,6 @@ namespace :whitelist_argument do
 
   desc 'list all whitelist arguments'
   task :list do
-    binding.pry
     tp WhitelistArgument.all
   end
 end
@@ -38,7 +37,7 @@ end
 namespace :user do
   desc "list users"
   task :list do
-    tp User.all, 'name', 'creator', 'application_name'
+    tp User.all, 'id', 'name', 'creator', 'application_name'
   end
 
   desc 'create new user setup'

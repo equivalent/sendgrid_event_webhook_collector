@@ -7,20 +7,28 @@ class EventsSerializer
     @params = params
   end
 
-  def href
+  def href(offset: 0)
     link = "#{authority}/v1/events?offset=#{offset}&limit=#{limit}"
     link += '&expand=items' if expand?('items')
     link
   end
 
+  def next?
+    !resources.map(&:id).include?(search_scope.last.id)
+  end
+
+  def previous?
+    offset > 0
+  end
+
   def to_hash
     {
-      href: href,
+      href: href(offset: offset),
       offset: offset,
       limit: limit,
-      first: "",
-      next: "",
-      previous: "",
+      first: href(offset: 0),
+      next: next? ? href(offset: offset + 1) : '',
+      previous: previous? ? href(offset: offset - 1) : '',
       last: "",
       items: items
     }
@@ -29,10 +37,13 @@ class EventsSerializer
   private
 
   def items
+    resources.collect { |event| serialize_resource(event) }
+  end
+
+  def resources
     search_scope
       .limit(limit)
       .offset(offset)
-      .collect { |event| serialize_resource(event) }
   end
 
   def serialize_resource(event)
