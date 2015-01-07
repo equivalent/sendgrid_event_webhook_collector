@@ -28,7 +28,8 @@ RSpec.describe 'GET /v1/events' do
       Then do
         expect(json_response).to be_kind_of Hash
         expect(json_response.fetch('items'))
-          .to match events.collect { |e| { 'href' => event_url(e.public_uid) } }
+          .to match events.collect { |e| { 'href' => event_url(e.public_uid),
+                                           'id' => e.public_uid } }
       end
     end
 

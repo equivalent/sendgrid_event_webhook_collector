@@ -52,7 +52,7 @@ class EventsSerializer
       .tap { |es| es.authority = authority }
       .to_hash
 
-    hash.slice!('href') unless expand?('items')
+    hash.slice!('id', 'href') unless expand?('items')
     hash
   end
 

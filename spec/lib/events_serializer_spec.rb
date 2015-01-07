@@ -26,8 +26,8 @@ RSpec.describe EventsSerializer do
             previous: "",
             last: "",
             items: [
-              { 'href' => event_url(event1.public_uid) },
-              { 'href' => event_url(event2.public_uid) }
+              { 'id' => event1.public_uid, 'href' => event_url(event1.public_uid) },
+              { 'id' => event2.public_uid, 'href' => event_url(event2.public_uid) }
             ]
           }
         )
@@ -77,7 +77,7 @@ RSpec.describe EventsSerializer do
             previous: "",
             last: "",
             items: [
-              { 'href' => event_url(event1.public_uid) },
+              { 'id' => event1.public_uid, 'href' => event_url(event1.public_uid) },
             ]
           }
         )
