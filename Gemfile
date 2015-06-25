@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.1.5'
 
 # core
 gem 'rake'
 gem 'sinatra'
 gem 'grape'
+gem 'foreman' # run Procfile
 
 # server
 gem 'unicorn'
