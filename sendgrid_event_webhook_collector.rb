@@ -26,7 +26,6 @@ class API < Grape::API
     end
   end
 
-
   before do
     logger.info "#{request.ip} #{request.request_method} " +
                 "#{env['PATH_INFO']} " +

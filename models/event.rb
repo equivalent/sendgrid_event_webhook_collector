@@ -7,9 +7,10 @@ class Event < ActiveRecord::Base
   has_many :arguments, dependent: :destroy
   has_many :categories
 
-  def self.process
+  def self.process(logger= API.logger)
     whitelist = WhitelistArgument.pluck(:name)
     unprocessed.each do |event|
+      logger.info "Proccessing #{event.to_logger_string}"
       EventProcessor.new
         .tap do |ep|
           ep.event = event
@@ -18,6 +19,10 @@ class Event < ActiveRecord::Base
         end
         .call
     end
+  end
+
+  def to_logger_string
+    "Event #{id}"
   end
 
   def preview
