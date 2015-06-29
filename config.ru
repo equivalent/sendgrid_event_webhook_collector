@@ -2,7 +2,6 @@ $stdout.sync = true # this will ensure that log is in sync
                     # if you use heroku
 
 unless ENV['RACK_ENV'] == 'development'
-  raise 'aaaaaaaaaa'
   require 'rack/ssl-enforcer'
   use Rack::SslEnforcer
 end
