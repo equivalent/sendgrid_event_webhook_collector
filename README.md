@@ -10,6 +10,13 @@ rake db:migrate               # for development
 RACK_ENV=test rake db:migrate # for test
 ```
 
+
+# running server
+
+```sh
+bundle exec foreman start
+```
+
 # User authentication
 
 ```

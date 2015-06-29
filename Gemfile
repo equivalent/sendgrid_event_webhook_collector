@@ -22,6 +22,9 @@ gem 'awrence' # underscore to camelCase
 # Uri
 gem 'public_uid'
 
+# enforce https connection
+gem 'rack-ssl-enforcer'
+
 # console output
 gem 'table_print'
 
