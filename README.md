@@ -10,22 +10,31 @@ rake db:migrate               # for development
 RACK_ENV=test rake db:migrate # for test
 ```
 
-
-# running server
+# Running server
 
 ```sh
+# production enforcing ssl
 bundle exec foreman start
+
+# development on port 3000 without ssl enforce
+RACK_ENV=development PORT=3000 bundle exec foreman start
 ```
+
+If used under Heroku, Procfile is set up to Unicorn.
 
 # User authentication
 
 ```
 # using header (recommended)
-curl -XGET -H 'Authorization: Token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' http://localhost:9393/events
+curl -XGET -H 'Authorization: Token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' http://localhost:3000/events
 
 # using param
-curl -XGET http://localhost:9393/events?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+curl -XGET http://localhost:3000/events?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
+# Usage documentation
+
+See request specs
 
 # Restricted arg names
 

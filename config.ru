@@ -1,8 +1,11 @@
 $stdout.sync = true # this will ensure that log is in sync
                     # if you use heroku
 
-require 'rack/ssl-enforcer'
-use Rack::SslEnforcer
+unless ENV['RACK_ENV'] == 'development'
+  raise 'aaaaaaaaaa'
+  require 'rack/ssl-enforcer'
+  use Rack::SslEnforcer
+end
 
 require './sendgrid_event_webhook_collector'
 #use Rack::Session::Cookie
