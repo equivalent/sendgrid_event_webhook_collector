@@ -1,2 +1,2 @@
 web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
-worker: rake event:process:daemon
+worker: bundle exec rake event:process:daemon
