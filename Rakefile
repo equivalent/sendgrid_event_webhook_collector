@@ -11,7 +11,19 @@ end
 namespace :event do
   desc 'Process unprocessed Events'
   task :process do
+    API.logger.info 'Processing events'
     Event.process
+  end
+
+  namespace :process do
+    desc 'Daemon to Process unprocessed Events'
+    task :daemon do
+      loop do
+        puts "AAAAAAAAAAAAAAAAAAAA"
+        Rake::Task['event:process'].invoke
+        sleep 5
+      end
+    end
   end
 end
 
