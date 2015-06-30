@@ -2,8 +2,8 @@ development:
   adapter:  postgresql
   encoding: unicode
   pool:     5
-  username: myuser
-  password: mypassword
+  username: postgres
+  password:
   host:     localhost
   database: sewc_development
 
@@ -11,7 +11,7 @@ test:
   adapter:  postgresql
   encoding: unicode
   pool:     5
-  username: myuser
-  password: mypassword
+  username: postgres
+  password: 
   host:     localhost
   database: sewc_test

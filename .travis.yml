@@ -1,5 +1,9 @@
 language: ruby
 rvm:
   - 2.2.2
+env:
+  - DB=postgresql
 before_script:
+  - psql -c 'create database sewc_test' -U postgres
+  - cp ./config/database.yml.example ./config/database.yml
   - "RACK_ENV=test bundle exec rake db:migrate"
