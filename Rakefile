@@ -1,6 +1,7 @@
 require "sinatra/activerecord/rake"
 require './sendgrid_event_webhook_collector'
 require 'table_print'
+require 'rspec/core/rake_task'
 
 if %w(test development).include?(ENV['RACK_ENV'])
   require 'rspec/core/rake_task'
@@ -85,6 +86,12 @@ namespace :user do
     end
   end
 end
+
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = Dir.glob('spec/**/*_spec.rb')
+end
+
+task default: [:spec]
 
 def yes_no(question)
   begin
