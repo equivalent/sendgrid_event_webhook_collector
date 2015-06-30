@@ -3,6 +3,8 @@ rvm:
   - 2.2.2
 env:
   - DB=postgresql
+addons:
+  postgresql: 9.3
 before_script:
   - psql -c 'create database sewc_test' -U postgres
   - cp ./config/database.yml.example ./config/database.yml
