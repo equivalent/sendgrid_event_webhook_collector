@@ -93,3 +93,9 @@ class Web < Sinatra::Base
     "Hello world."
   end
 end
+
+logger = Logger.new('/var/log/sewc.log')
+logger.level = 1 # info
+API.logger = logger
+ActiveRecord::Base.logger = logger
+
