@@ -14,7 +14,7 @@ class EventsSerializer
   end
 
   def next?
-    !resources.map(&:id).include?(search_scope.last.id)
+    !resources.map(&:id).include?(search_scope.last.id) if resources.any?
   end
 
   def previous?

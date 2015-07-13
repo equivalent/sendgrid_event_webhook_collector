@@ -73,4 +73,24 @@ RSpec.describe 'GET /v1/events' do
       expect(events_json_event_hrefs).to include event_url(event.public_uid)
     end
   end
+
+  context 'when events are empty' do
+    When do
+      header('Authorization', "Token #{token}")
+      get("/v1/events")
+    end
+
+    Then do
+      expect(json_response).to eq({
+        "first" => "http://api.myapp.com/v1/events?offset=0&limit=40",
+        "href" => "http://api.myapp.com/v1/events?offset=0&limit=40",
+        "items" => [],
+        "last" => "",
+        "limit" => 40,
+        "next" => "",
+        "offset" => 0,
+        "previous" => "",
+      })
+    end
+  end
 end
