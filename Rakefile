@@ -3,11 +3,6 @@ require './sendgrid_event_webhook_collector'
 require 'table_print'
 require 'rspec/core/rake_task'
 
-logger = Logger.new('/var/log/sewc-rake.log')
-logger.level = 1 # info
-API.logger = logger
-ActiveRecord::Base.logger = logger
-
 if %w(test development).include?(ENV['RACK_ENV'])
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec)
@@ -17,6 +12,11 @@ end
 namespace :event do
   desc 'Process unprocessed Events'
   task :process do
+    #logger = Logger.new('/var/log/sewc-rake.log')
+    #logger.level = 1 # info
+    #API.logger = logger
+    #ActiveRecord::Base.logger = logger
+
     # make this cron http://www.eq8.eu/blogs/15-cron-rbenv-bundle-exec-rake-task
     API.logger.info 'Processing events'
     Event.process

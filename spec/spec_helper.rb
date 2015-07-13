@@ -1,4 +1,5 @@
 ENV['RACK_ENV'] = 'test'
+ENV['logger_path'] = 'tmp/sewc-test.log'
 
 require 'rack/test'
 require 'json'

@@ -94,7 +94,7 @@ class Web < Sinatra::Base
   end
 end
 
-logger = Logger.new('/var/log/sewc.log')
+logger = Logger.new(ENV['logger_path'] ||= 'tmp/sewc.log')
 logger.level = 1 # info
 API.logger = logger
 ActiveRecord::Base.logger = logger
