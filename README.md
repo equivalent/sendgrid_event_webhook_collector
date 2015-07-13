@@ -58,6 +58,16 @@ curl -XGET -H 'Authorization: Token xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' ht
 curl -XGET http://localhost:3000/events?token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
+## Users 
+
+`RACK_ENV=production bundle exec rake user:list`
+`RACK_ENV=production bundle exec rake user:add`
+
+* sendgrid creator user is Sendgrid => can push events to sewc
+  so if you adding new server user then chose `no`
+* application name that can user access is something like
+  `my_server_production`
+
 # Usage documentation
 
 See request specs
